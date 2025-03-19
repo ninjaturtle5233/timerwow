@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계정 시간 관리 시스템</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>계정 시간 관리 시스템</h1>
+        
+        <div class="global-settings">
+            <div class="setting-group">
+                <label for="volume-control">알림 소리 볼륨:</label>
+                <input type="range" id="volume-control" min="0" max="100" value="50">
+                <span id="volume-value">50%</span>
+            </div>
+        </div>
+        
+        <div class="accounts">
+            <div class="account" id="account1">
+                <h2>1번 계정 <span class="goal">(목표: <span id="account1-goal-display">9</span>시간)</span></h2>
+                <div class="time-display">
+                    <div class="time-info">
+                        <p>누적 플레이 시간: <span id="account1-total">00:00:00</span></p>
+                        <p>목표까지 남은 시간: <span id="account1-remaining">09:00:00</span></p>
+                        <p>현재 세션 시간: <span id="account1-session">00:00:00</span></p>
+                        <p>다음 휴식까지: <span id="account1-next-rest">03:00:00</span></p>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="account1-progress" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div class="settings">
+                    <div class="setting-group">
+                        <label for="account1-goal-time">목표 시간 (시간):</label>
+                        <input type="number" id="account1-goal-time" min="1" max="24" value="9">
+                    </div>
+                    <div class="setting-group">
+                        <label for="account1-interval-time">휴식 알림 간격 (분):</label>
+                        <input type="number" id="account1-interval-time" min="10" step="10" value="180">
+                    </div>
+                    <div class="setting-group">
+                        <label for="account1-rest-time">휴식 시간 (분):</label>
+                        <input type="number" id="account1-rest-time" min="10" step="10" value="60">
+                    </div>
+                </div>
+                <div class="controls">
+                    <button class="start-btn" id="account1-start">시작</button>
+                    <button class="stop-btn" id="account1-stop" disabled>종료</button>
+                    <button class="reset-btn" id="account1-reset">초기화</button>
+                </div>
+                <div class="status" id="account1-status">대기 중</div>
+                <div class="rest-timer" id="account1-rest-timer" style="display: none;">
+                    <h3>휴식 타이머</h3>
+                    <p>남은 시간: <span id="account1-rest-remaining">00:00:00</span></p>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="account1-rest-progress"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="account" id="account2">
+                <h2>2번 계정 <span class="goal">(목표: <span id="account2-goal-display">12</span>시간)</span></h2>
+                <div class="time-display">
+                    <div class="time-info">
+                        <p>누적 플레이 시간: <span id="account2-total">00:00:00</span></p>
+                        <p>목표까지 남은 시간: <span id="account2-remaining">12:00:00</span></p>
+                        <p>현재 세션 시간: <span id="account2-session">00:00:00</span></p>
+                        <p>다음 휴식까지: <span id="account2-next-rest">03:00:00</span></p>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="account2-progress" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div class="settings">
+                    <div class="setting-group">
+                        <label for="account2-goal-time">목표 시간 (시간):</label>
+                        <input type="number" id="account2-goal-time" min="1" max="24" value="12">
+                    </div>
+                    <div class="setting-group">
+                        <label for="account2-interval-time">휴식 알림 간격 (분):</label>
+                        <input type="number" id="account2-interval-time" min="10" step="10" value="180">
+                    </div>
+                    <div class="setting-group">
+                        <label for="account2-rest-time">휴식 시간 (분):</label>
+                        <input type="number" id="account2-rest-time" min="10" step="10" value="60">
+                    </div>
+                </div>
+                <div class="controls">
+                    <button class="start-btn" id="account2-start">시작</button>
+                    <button class="stop-btn" id="account2-stop" disabled>종료</button>
+                    <button class="reset-btn" id="account2-reset">초기화</button>
+                </div>
+                <div class="status" id="account2-status">대기 중</div>
+                <div class="rest-timer" id="account2-rest-timer" style="display: none;">
+                    <h3>휴식 타이머</h3>
+                    <p>남은 시간: <span id="account2-rest-remaining">00:00:00</span></p>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="account2-rest-progress"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="account" id="account3">
+                <h2>3번 계정 <span class="goal">(목표: <span id="account3-goal-display">15</span>시간)</span></h2>
+                <div class="time-display">
+                    <div class="time-info">
+                        <p>누적 플레이 시간: <span id="account3-total">00:00:00</span></p>
+                        <p>목표까지 남은 시간: <span id="account3-remaining">15:00:00</span></p>
+                        <p>현재 세션 시간: <span id="account3-session">00:00:00</span></p>
+                        <p>다음 휴식까지: <span id="account3-next-rest">03:00:00</span></p>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="account3-progress" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div class="settings">
+                    <div class="setting-group">
+                        <label for="account3-goal-time">목표 시간 (시간):</label>
+                        <input type="number" id="account3-goal-time" min="1" max="24" value="15">
+                    </div>
+                    <div class="setting-group">
+                        <label for="account3-interval-time">휴식 알림 간격 (분):</label>
+                        <input type="number" id="account3-interval-time" min="10" step="10" value="180">
+                    </div>
+                    <div class="setting-group">
+                        <label for="account3-rest-time">휴식 시간 (분):</label>
+                        <input type="number" id="account3-rest-time" min="10" step="10" value="60">
+                    </div>
+                </div>
+                <div class="controls">
+                    <button class="start-btn" id="account3-start">시작</button>
+                    <button class="stop-btn" id="account3-stop" disabled>종료</button>
+                    <button class="reset-btn" id="account3-reset">초기화</button>
+                </div>
+                <div class="status" id="account3-status">대기 중</div>
+                <div class="rest-timer" id="account3-rest-timer" style="display: none;">
+                    <h3>휴식 타이머</h3>
+                    <p>남은 시간: <span id="account3-rest-remaining">00:00:00</span></p>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="account3-rest-progress"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="account" id="account4">
+                <h2>4번 계정 <span class="goal">(목표: <span id="account4-goal-display">10</span>시간)</span></h2>
+                <div class="time-display">
+                    <div class="time-info">
+                        <p>누적 플레이 시간: <span id="account4-total">00:00:00</span></p>
+                        <p>목표까지 남은 시간: <span id="account4-remaining">10:00:00</span></p>
+                        <p>현재 세션 시간: <span id="account4-session">00:00:00</span></p>
+                        <p>다음 휴식까지: <span id="account4-next-rest">03:00:00</span></p>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="account4-progress" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div class="settings">
+                    <div class="setting-group">
+                        <label for="account4-goal-time">목표 시간 (시간):</label>
+                        <input type="number" id="account4-goal-time" min="1" max="24" value="10">
+                    </div>
+                    <div class="setting-group">
+                        <label for="account4-interval-time">휴식 알림 간격 (분):</label>
+                        <input type="number" id="account4-interval-time" min="10" step="10" value="180">
+                    </div>
+                    <div class="setting-group">
+                        <label for="account4-rest-time">휴식 시간 (분):</label>
+                        <input type="number" id="account4-rest-time" min="10" step="10" value="60">
+                    </div>
+                </div>
+                <div class="controls">
+                    <button class="start-btn" id="account4-start">시작</button>
+                    <button class="stop-btn" id="account4-stop" disabled>종료</button>
+                    <button class="reset-btn" id="account4-reset">초기화</button>
+                </div>
+                <div class="status" id="account4-status">대기 중</div>
+                <div class="rest-timer" id="account4-rest-timer" style="display: none;">
+                    <h3>휴식 타이머</h3>
+                    <p>남은 시간: <span id="account4-rest-remaining">00:00:00</span></p>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="account4-rest-progress"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="account" id="account5">
+                <h2>5번 계정 <span class="goal">(목표: <span id="account5-goal-display">8</span>시간)</span></h2>
+                <div class="time-display">
+                    <div class="time-info">
+                        <p>누적 플레이 시간: <span id="account5-total">00:00:00</span></p>
+                        <p>목표까지 남은 시간: <span id="account5-remaining">08:00:00</span></p>
+                        <p>현재 세션 시간: <span id="account5-session">00:00:00</span></p>
+                        <p>다음 휴식까지: <span id="account5-next-rest">03:00:00</span></p>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="account5-progress" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div class="settings">
+                    <div class="setting-group">
+                        <label for="account5-goal-time">목표 시간 (시간):</label>
+                        <input type="number" id="account5-goal-time" min="1" max="24" value="8">
+                    </div>
+                    <div class="setting-group">
+                        <label for="account5-interval-time">휴식 알림 간격 (분):</label>
+                        <input type="number" id="account5-interval-time" min="10" step="10" value="180">
+                    </div>
+                    <div class="setting-group">
+                        <label for="account5-rest-time">휴식 시간 (분):</label>
+                        <input type="number" id="account5-rest-time" min="10" step="10" value="60">
+                    </div>
+                </div>
+                <div class="controls">
+                    <button class="start-btn" id="account5-start">시작</button>
+                    <button class="stop-btn" id="account5-stop" disabled>종료</button>
+                    <button class="reset-btn" id="account5-reset">초기화</button>
+                </div>
+                <div class="status" id="account5-status">대기 중</div>
+                <div class="rest-timer" id="account5-rest-timer" style="display: none;">
+                    <h3>휴식 타이머</h3>
+                    <p>남은 시간: <span id="account5-rest-remaining">00:00:00</span></p>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="account5-rest-progress"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="account" id="account6">
+                <h2>6번 계정 <span class="goal">(목표: <span id="account6-goal-display">6</span>시간)</span></h2>
+                <div class="time-display">
+                    <div class="time-info">
+                        <p>누적 플레이 시간: <span id="account6-total">00:00:00</span></p>
+                        <p>목표까지 남은 시간: <span id="account6-remaining">06:00:00</span></p>
+                        <p>현재 세션 시간: <span id="account6-session">00:00:00</span></p>
+                        <p>다음 휴식까지: <span id="account6-next-rest">03:00:00</span></p>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="account6-progress" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div class="settings">
+                    <div class="setting-group">
+                        <label for="account6-goal-time">목표 시간 (시간):</label>
+                        <input type="number" id="account6-goal-time" min="1" max="24" value="6">
+                    </div>
+                    <div class="setting-group">
+                        <label for="account6-interval-time">휴식 알림 간격 (분):</label>
+                        <input type="number" id="account6-interval-time" min="10" step="10" value="180">
+                    </div>
+                    <div class="setting-group">
+                        <label for="account6-rest-time">휴식 시간 (분):</label>
+                        <input type="number" id="account6-rest-time" min="10" step="10" value="60">
+                    </div>
+                </div>
+                <div class="controls">
+                    <button class="start-btn" id="account6-start">시작</button>
+                    <button class="stop-btn" id="account6-stop" disabled>종료</button>
+                    <button class="reset-btn" id="account6-reset">초기화</button>
+                </div>
+                <div class="status" id="account6-status">대기 중</div>
+                <div class="rest-timer" id="account6-rest-timer" style="display: none;">
+                    <h3>휴식 타이머</h3>
+                    <p>남은 시간: <span id="account6-rest-remaining">00:00:00</span></p>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="account6-rest-progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-log">
+            <h2>세션 기록</h2>
+            <div id="log-container"></div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification">
+        <div class="notification-content">
+            <p id="notification-message"></p>
+            <button id="notification-close">확인</button>
+        </div>
+    </div>
+
+    <audio id="alert-sound" preload="auto">
+        <source src="44.wav" type="audio/wav">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
